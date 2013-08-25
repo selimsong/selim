@@ -8,8 +8,8 @@
 if(!empty($_POST['title'])){
 $m = new mongoClient('mongodb://127.0.0.1', array());
 $db = $m->star;
-$collection = $db->users;
-$doc = array('title' => $_POST['title'], 'price' => $_POST['price'], 'website' => $_POST['website'], 'imageurl' => addslashes($_POST['imageurl']), 'updatetime'=> time());
+$collection = $db->mei;
+$doc = array('title' => trim($_POST['title']), 'price' => trim($_POST['price']), 'website' => trim($_POST['website']), 'imageurl' => addslashes(trim($_POST['imageurl'])), 'gstatus' => 1,'updatetime'=> time());
 $collection->insert($doc);
 
 }
