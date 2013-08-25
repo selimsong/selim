@@ -20,6 +20,7 @@ foreach ($cursor as $doc) {
     <td width="392">image:  <img border="0" src="<?php echo $doc['imageurl'] ?>"  ></td>
     <td width="121">goodsstatus: <?php echo $doc['gstatus'] ?></td>
     <td width="138">updatetime: <?php echo $doc['updatetime'] ?></td>
+	<td width="edit"><a href="<?php echo $doc['buyurl'] ?>">buy</a></td>
     <td width="edit"><a href="edit.php?id=<?php echo $doc['_id']->{'$id'} ?>">编辑</a></td>
   </tr>
 <?php
