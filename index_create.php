@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -10,6 +9,9 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+<?php
+ob_start();
+?>
 <body>
     <header>
         <a class="logo" href="#"><h1>mei 94</h1></a>
@@ -28,63 +30,29 @@
                 <a class="video" href="#">李宁</a>
             </div>
             <div class="postExcerpts">
-			               <div class="postExcerpt photography">
+			<?php
+				$m = new mongoClient('mongodb://127.0.0.1', array());
+				$db = $m->spider;
+				$collection = $db->shoes;
+				$cursor = $collection->find()->limit(20);
+				foreach ($cursor as $doc) {
+			?>
+               <div class="postExcerpt photography">
                     <div class="postExcerptInner">
                         <div class="titleAndCat">
-                            <h2>李宁 女子运动休闲鞋 ALCD054-1 可可棕/白色 36</h2>
-                            <em class="cat">￥55.00</em>
-                             <em>京东</em> 
+                            <h2><?php echo $doc['title'] ?></h2>
+                            <em class="cat">￥<?php echo $doc['price'] ?></em>
+                             <em><?php echo $doc['website'] ?></em> 
                         </div>
                         <div class="imgWrap">
-                            <img src="http://img10.360buyimg.com/n2/g9/M02/0E/10/rBEHaVCl4gwIAAAAAAAs13wmTNEAAC1VgEmPswAACzv039.jpg" alt="李宁 女子运动休闲鞋 ALCD054-1 可可棕/白色 36" > 
+                            <img src="<?php echo $doc['imgurl'] ?>" alt="<?php echo $doc['title'] ?>" > 
                         </div>
                         <a class="view" href="#">View</a>
                     </div>
                </div>
 
-			                  <div class="postExcerpt photography">
-                    <div class="postExcerptInner">
-                        <div class="titleAndCat">
-                            <h2>李宁lining女式经典休闲鞋板鞋ALCF024-2</h2>
-                            <em class="cat">￥99.00</em>
-                             <em>京东</em> 
-                        </div>
-                        <div class="imgWrap">
-                            <img src="http://img13.360buyimg.com/n2/g9/M03/08/06/rBEHalBtiKAIAAAAAAEatssxm4AAABmaQAtyscAARrO631.jpg" alt="李宁lining女式经典休闲鞋板鞋ALCF024-2" > 
-                        </div>
-                        <a class="view" href="#">View</a>
-                    </div>
-               </div>
-
-			                  <div class="postExcerpt photography">
-                    <div class="postExcerptInner">
-                        <div class="titleAndCat">
-                            <h2>李宁 LINING 运动鞋 女子经典生活系列休闲鞋 ALCE706-1</h2>
-                            <em class="cat">￥99.00</em>
-                             <em>京东</em> 
-                        </div>
-                        <div class="imgWrap">
-                            <img src="http://img11.360buyimg.com/n2/g10/M00/0C/06/rBEQWVFICpsIAAAAAARBa9Tyfd4AACYpgL08RUABEGD907.jpg" alt="李宁 LINING 运动鞋 女子经典生活系列休闲鞋 ALCE706-1" > 
-                        </div>
-                        <a class="view" href="#">View</a>
-                    </div>
-               </div>
-
-			                  <div class="postExcerpt photography">
-                    <div class="postExcerptInner">
-                        <div class="titleAndCat">
-                            <h2>鸿星尔克ERKE女鞋滑板鞋-12033124-12</h2>
-                            <em class="cat">￥88.00</em>
-                             <em>京东</em> 
-                        </div>
-                        <div class="imgWrap">
-                            <img src="http://img14.360buyimg.com/n7/g14/M00/09/14/rBEhVlIDP1EIAAAAAADk53sxPiYAAB4rQL5YL0AAOT_640.jpg" alt="鸿星尔克ERKE女鞋滑板鞋-12033124-12" > 
-                        </div>
-                        <a class="view" href="#">View</a>
-                    </div>
-               </div>
-
-			                      
+			   <?php } ?>
+                   
     </div>
     </div>
     </div>
@@ -149,3 +117,7 @@
 
 </body>
 </html>
+<?php
+file_put_contents('index.html', ob_get_contents());
+ob_end_flush();
+?>
